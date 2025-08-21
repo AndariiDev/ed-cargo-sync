@@ -15,10 +15,7 @@
 
 ## Installation
 
-Download from releases and run. Simple!
-
-
-Alternatively, build from source using Rust and Cargo:
+Build from source using Rust and Cargo:
 
 git clone <repo-url>
 cd ed-cargo-sync
