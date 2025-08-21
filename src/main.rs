@@ -1,42 +1,54 @@
-use std::io;
-
-struct Ship {
-    name: String,
-    capacity: u16,
-}
-
-struct Commodity {
-    name: String,
-    required: u32,
-}
+use std::io::{self, Write};
 
 fn main() {
-    let mut commodity_name = String::new();
+    let steel_needed = read_input_u16("Enter steel amount needed: ");
+    let titanium_needed = read_input_u16("Enter titanium amount needed: ");
+    let ship_capacity = read_input_u16("Enter ship cargo capacity: ");
 
-    println!("Enter the commodity name:");
+    let (steel_per_trip, titanium_per_trip) =
+        calculate_cargo_split(steel_needed, titanium_needed, ship_capacity);
 
-    io::stdin()
-        .read_line(&mut commodity_name)
-        .expect("Failed to read line");
+    println!(
+        "Deliver {} steel and {} titanium this trip.",
+        steel_per_trip, titanium_per_trip
+    );
+}
 
-    // Remove the newline character at the end
-    let commodity_name = commodity_name.trim();
+fn calculate_cargo_split(
+    steel_needed: u16,
+    titanium_needed: u16,
+    ship_capacity: u16,
+) -> (u16, u16) {
+    let total_needed = steel_needed as u32 + titanium_needed as u32;
 
-    // print to check
-    println!("You entered: {}", commodity_name);
+    if total_needed == 0 {
+        return (0, 0);
+    }
 
-    let mut commodity_required_str = String::new();
+    let steel_ratio = (steel_needed as u32 * 1000) / total_needed;
+    let titanium_ratio = (titanium_needed as u32 * 1000) / total_needed;
 
-    println!("Enter the commodity amount:");
+    let steel_per_trip = (ship_capacity as u32 * steel_ratio) / 1000;
+    let titanium_per_trip = (ship_capacity as u32 * titanium_ratio) / 1000;
 
-    io::stdin()
-        .read_line(&mut commodity_required_str)
-        .expect("Failed to read amount");
+    (steel_per_trip as u16, titanium_per_trip as u16)
+}
 
-    let commodity_required: u32 = commodity_required_str
-        .trim()
-        .parse()
-        .expect("Please enter a valid number");
+fn read_input_u16(prompt: &str) -> u16 {
+    loop {
+        print!("{}", prompt);
+        io::stdout().flush().expect("Failed to flush stdout");
 
-    println!("You entered: {}", commodity_required);
+        let mut input = String::new();
+        io::stdin()
+            .read_line(&mut input)
+            .expect("Failed to read line");
+
+        match input.trim().parse::<u16>() {
+            Ok(value) => return value,
+            Err(_) => {
+                println!("Invalid input, please enter a valid positive whole number.");
+            }
+        }
+    }
 }
