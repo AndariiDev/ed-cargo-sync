@@ -1,6 +1,6 @@
 # cargo_sync
 
-**cargo_sync** is a simple command-line tool for *Elite: Dangerous* pilots to evenly split cargo delivery loads across trips. It helps balance your cargo runs by calculating how much steel, titanium, or other commodities to carry each trip, syncing deliveries efficiently.
+**cargo_sync** is a simple command-line tool for *Elite: Dangerous* to evenly split cargo delivery loads across trips. It helps balance your cargo runs by calculating how much steel, titanium, or other commodities to carry each trip, syncing deliveries efficiently.
 
 ---
 
