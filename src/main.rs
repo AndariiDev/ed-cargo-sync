@@ -19,17 +19,17 @@ fn calculate_cargo_split(
     titanium_needed: u16,
     ship_capacity: u16,
 ) -> (u16, u16) {
-    let total_needed = steel_needed as u32 + titanium_needed as u32;
+    let total_needed = steel_needed as f32 + titanium_needed as f32;
 
-    if total_needed == 0 {
+    if total_needed == 0.0 {
         return (0, 0);
     }
 
-    let steel_ratio = (steel_needed as u32 * 1000) / total_needed;
-    let titanium_ratio = (titanium_needed as u32 * 1000) / total_needed;
+    let steel_ratio = (steel_needed as f32 * 1000.0) / total_needed;
+    let titanium_ratio = (titanium_needed as f32 * 1000.0) / total_needed;
 
-    let steel_per_trip = (ship_capacity as u32 * steel_ratio) / 1000;
-    let titanium_per_trip = (ship_capacity as u32 * titanium_ratio) / 1000;
+    let steel_per_trip = (ship_capacity as f32 * steel_ratio) / 1000.0;
+    let titanium_per_trip = (ship_capacity as f32 * titanium_ratio) / 1000.0;
 
     (steel_per_trip as u16, titanium_per_trip as u16)
 }
